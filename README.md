@@ -1,24 +1,78 @@
-# README
+# Разворачивание базы данных и настройка проекта Ruby on Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Запуск контейнера с MySQL
 
-Things you may want to cover:
+Откройте терминал и выполните следующую команду в корне вашего проекта:
 
-* Ruby version
+```bash
+docker-compose up -d
+```
 
-* System dependencies
+Это запустит контейнер в фоновом режиме.
 
-* Configuration
+### Проверьте, что контейнер работает
 
-* Database creation
+Убедитесь, что контейнер запущен, выполнив команду:
 
-* Database initialization
+```bash
+docker ps
+```
 
-* How to run the test suite
+### Вход в контейнер MySQL
 
-* Services (job queues, cache servers, search engines, etc.)
+Для выполнения ручных команд в MySQL, войдите в контейнер, используя следующую команду:
 
-* Deployment instructions
+```bash
+docker exec -it <container_id> mysql -u root -p
+```
 
-* ...
+Замените `<container_id>` на ID вашего MySQL контейнера (вы можете найти его с помощью `docker ps`). Введите пароль `root_password`, который вы указали в `docker-compose.yml`.
+
+### Создание баз данных
+
+После входа в MySQL, выполните следующие команды для создания баз данных:
+
+```sql
+-- Создание базы данных для разработки
+CREATE DATABASE IF NOT EXISTS ccc_development;
+
+-- Создание базы данных для тестирования
+CREATE DATABASE IF NOT EXISTS ccc_test;
+
+-- Предоставление всех привилегий на базы данных пользователю ccc_user
+GRANT ALL PRIVILEGES ON ccc_development.* TO 'ccc_user'@'%';
+GRANT ALL PRIVILEGES ON ccc_test.* TO 'ccc_user'@'%';
+
+-- Применение привилегий
+FLUSH PRIVILEGES;
+```
+
+
+## Выполнение миграций
+
+После настройки базы данных выполните миграции для вашего приложения. Это создаст необходимые таблицы и структуры в базе данных.
+
+### Запустите миграции для окружения разработки
+
+Для выполнения миграций в окружении разработки выполните команду:
+
+```bash
+rails db:migrate
+```
+
+### Запустите миграции для окружения тестирования
+
+Чтобы выполнить миграции в тестовом окружении, используйте следующую команду:
+
+```bash
+rails db:migrate RAILS_ENV=test
+```
+
+## Запуск тестов
+
+После успешного выполнения миграций вы можете запустить тесты приложения. Для этого выполните команду:
+
+```bash
+rails test
+```
+
