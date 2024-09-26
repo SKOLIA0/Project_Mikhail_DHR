@@ -1,0 +1,36 @@
+<h1>Список пользователей</h1>
+
+<%= link_to "Создать нового пользователя", new_user_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+  <tr>
+    <th>Имя</th>
+    <th>Фамилия</th>
+    <th>Email</th>
+    <th>Возраст</th>
+    <th>Пол</th>
+    <th>Интересы</th>
+    <th>Навыки</th>
+    <th>Действия</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.surname %></td>
+      <td><%= user.email %></td>
+      <td><%= user.age %></td>
+      <td><%= user.gender == 'male' ? 'Мужской' : 'Женский' %></td>
+      <td><%= user.interests.map(&:name).join(', ') %></td>
+      <td><%= user.skills.map(&:name).join(', ') %></td>
+      <td>
+        <%= link_to "Показать", user_path(user), class: 'btn btn-secondary' %>
+        <%= link_to "Редактировать", edit_user_path(user), class: 'btn btn-warning' %>
+        <%= link_to "Удалить", user_path(user), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'btn btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: my_mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ccc_development
+      MYSQL_USER: ccc_user
+      MYSQL_PASSWORD: ccc_password
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+      - ./mysql-init/my.cnf:/etc/mysql/conf.d/my.cnf
+    command: bash -c "chmod 644 /etc/mysql/conf.d/my.cnf && docker-entrypoint.sh mysqld"
+
+volumes:
+  mysql_data:

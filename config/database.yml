@@ -1,0 +1,23 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: ccc_user
+  password: ccc_password
+  host: localhost
+  port: 3308
+
+development:
+  <<: *default
+  database: ccc_development
+
+test:
+  <<: *default
+  database: ccc_test
+
+production:
+  <<: *default
+  database: ccc_production
+  username: <%= ENV['CCC_DATABASE_USER'] %>
+  password: <%= ENV['CCC_DATABASE_PASSWORD'] %>
+  host: <%= ENV['CCC_DATABASE_HOST'] %>

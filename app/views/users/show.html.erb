@@ -1,0 +1,13 @@
+<p>Имя:<%= @user.name %></p>
+<p>Фамилия:<%= @user.surname %></p>
+<p>Email: <%= @user.email %></p>
+<p>Возраст: <%= @user.age %></p>
+<p>Пол: <%= @user.gender == 'male' ? 'Мужской' : 'Женский' %></p>
+<p>Национальность: <%= @user.nationality %></p>
+<p>Страна: <%= @user.country %></p>
+<p>Интересы: <%= @user.interests.map(&:name).join(', ') %></p>
+<p>Навыки: <%= @user.skills.map(&:name).join(', ') %></p>
+
+<%= link_to 'Редактировать', edit_user_path(@user), class: 'btn btn-warning' %>
+<%= link_to 'Удалить', user_path(@user), data: { turbo_method: :delete, confirm: 'Вы уверены?' }, class: 'btn btn-danger' %>
+<%= link_to 'Назад к списку', users_path, class: 'btn btn-secondary' %>

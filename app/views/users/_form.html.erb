@@ -1,0 +1,66 @@
+<%= form_with(model: @user, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> запрещают сохранить пользователя:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, "Имя" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :surname, "Фамилия" %>
+    <%= form.text_field :surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :patronymic, "Отчество" %>
+    <%= form.text_field :patronymic %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email, "Email" %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :age, "Возраст" %>
+    <%= form.number_field :age %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nationality, "Национальность" %>
+    <%= form.text_field :nationality %>
+  </div>
+
+  <div class="field">
+    <%= form.label :country, "Страна" %>
+    <%= form.text_field :country %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gender, "Пол" %>
+    <%= form.select :gender, options_for_select([['Мужской', 'male'], ['Женский', 'female']], selected: @user.gender) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :interests, "Интересы (через запятую)" %>
+    <%= form.text_field :interests, value: @user.interests.map(&:name).join(', ') %>
+  </div>
+
+  <div class="field">
+    <%= form.label :skills, "Навыки (через запятую)" %>
+    <%= form.text_field :skills, value: @user.skills.map(&:name).join(', ') %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
